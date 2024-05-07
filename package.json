@@ -14,8 +14,10 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.16",
+    "axios": "^1.6.8",
     "devextreme": "23.2.4",
     "devextreme-react": "23.2.4",
+    "ramda": "^0.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

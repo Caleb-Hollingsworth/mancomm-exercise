@@ -2,8 +2,11 @@ import { Grid, Stack } from '@mui/material';
 import Chart from '../chart/chart';
 import Graph from '../graph/graph';
 import Widgets from '../widgets/widgets';
+import useWeather from '../../hooks/use-weather';
 
 const Content = () => {
+    const { currentWeather } = useWeather();
+    console.log('currentWeather', currentWeather);
     return (
         <Grid container columns={12} height='100%'>
             <Grid item xs={8}>
