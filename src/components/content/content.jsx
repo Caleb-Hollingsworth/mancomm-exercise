@@ -1,6 +1,6 @@
 import { Box, Grid, Stack } from '@mui/material';
 import Chart from '../chart/chart';
-import Graph from '../graph/graph';
+import Sidebar from '../sidebar/sidebar';
 import Widgets from '../widgets/widgets';
 import useBreakpoint from '../../hooks/use-breakpoint';
 
@@ -22,7 +22,7 @@ const Content = () => {
             </Grid>
             {!mobile && (
                 <Grid item xs={mobile ? 12 : 3.5}>
-                    <Graph />
+                    <Sidebar />
                 </Grid>
             )}
         </Grid>

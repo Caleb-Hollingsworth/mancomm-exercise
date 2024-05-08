@@ -5,7 +5,7 @@ import { prop } from 'ramda';
 import { useMemo } from 'react';
 import { Brightness3, DarkMode, NightsStay, WbSunny, WbTwilight } from '@mui/icons-material';
 
-const Graph = () => {
+const Sidebar = () => {
     const { astronomy } = useAstronomyWeather();
     const theme = useTheme();
     const astroData = useMemo(() => {
@@ -21,7 +21,7 @@ const Graph = () => {
         }
         return [];
     }, [astronomy]);
-    console.log('astronomy', astronomy)
+
     return (
         <Stack bgcolor='white' width='100%' height='100%' p={5} spacing={4}>
             <TitleMenu title='Astronomical Info' />
@@ -46,4 +46,4 @@ const Graph = () => {
     );
 };
 
-export default Graph;
+export default Sidebar;

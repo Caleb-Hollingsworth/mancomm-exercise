@@ -57,6 +57,7 @@ const Chart = () => {
                 {weatherSources?.map((source) => (
                     <Series
                         key={`weather-chart-${source?.value}`}
+                        color={theme?.palette?.primary?.purple}
                         valueField={source?.value}
                         name={source?.name}
                     />

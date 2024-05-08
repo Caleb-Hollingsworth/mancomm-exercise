@@ -1,4 +1,4 @@
-import { CalendarTodayOutlined, DescriptionOutlined, EventRepeatOutlined, GrainOutlined, HomeOutlined, LogoutOutlined } from '@mui/icons-material';
+import { CalendarTodayOutlined, EventRepeatOutlined, GrainOutlined, HomeOutlined, LogoutOutlined } from '@mui/icons-material';
 import { Stack } from '@mui/material';
 import { useCallback } from 'react';
 import useBreakpoint from '../../../hooks/use-breakpoint';
@@ -10,9 +10,7 @@ const NavigationToolbar = () => {
     const [selected, setChartType] = useStore(state => [state.selected, state.setSelected])
     const { mobile } = useBreakpoint();
     const handleTab = useCallback((value) => {
-        if (value !== 'description') {
-            setChartType(value);
-        }
+        setChartType(value);
     }, [setChartType]);
     return (
         <Stack bgcolor='white' minHeight={mobile ? 'auto' : '100vh'} minWidth='100%' justifyContent='space-between' alignItems='center' py={3} direction={mobile ? 'row' : 'column'}>
@@ -28,9 +26,6 @@ const NavigationToolbar = () => {
                 </IconButton>
                 <IconButton onClick={() => handleTab('history.json')} selected={selected === 'history.json'} tip='Week Behind'>
                     <EventRepeatOutlined fontSize='large' />
-                </IconButton>
-                <IconButton onClick={() => handleTab('description')} selected={selected === 'description'} tip='Description'>
-                    <DescriptionOutlined fontSize='large' />
                 </IconButton>
             </Stack>
             <IconButton noHover>
