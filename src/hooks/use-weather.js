@@ -2,25 +2,27 @@ import { useCallback, useEffect, useState } from "react";
 import { API } from "../libs/api";
 import { isEmpty } from "ramda";
 
-const useWeather = () => {
-    const [currentWeather, setCurrentWeather] = useState({});
+const useWeather = ({ type, ...opts }) => {
+    console.log('opts', opts)
+    const [weather, setWeather] = useState({});
     const getWeather = useCallback(async () => {
-        await API.get(`current.json`, {
+        await API.get(type, {
             params: {
                 q: 'Dallas',
+                ...opts
             }
         }).then(res => {
             console.log('res', res);
-            setCurrentWeather(res?.data?.current);
+            setWeather(res?.data);
         })
-    }, []);
+    }, [opts, type]);
     useEffect(() => {
-        if (isEmpty(currentWeather)) {
+        if (isEmpty(weather)) {
             getWeather();
         }
-    }, [currentWeather, getWeather]);
+    }, [weather, getWeather, type]);
 
-    return { currentWeather };
+    return { weather };
 };
 
 export default useWeather;

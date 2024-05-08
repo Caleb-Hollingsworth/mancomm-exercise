@@ -2,20 +2,17 @@ import { Grid, Stack } from '@mui/material';
 import Chart from '../chart/chart';
 import Graph from '../graph/graph';
 import Widgets from '../widgets/widgets';
-import useWeather from '../../hooks/use-weather';
 
 const Content = () => {
-    const { currentWeather } = useWeather();
-    console.log('currentWeather', currentWeather);
     return (
         <Grid container columns={12} height='100%'>
-            <Grid item xs={8}>
-                <Stack>
-                    <Chart />
+            <Grid item xs={8.5} pr={6}>
+                <Stack justifyContent='space-between' spacing={6}>
                     <Widgets />
+                    <Chart />
                 </Stack>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={3.5}>
                 <Graph />
             </Grid>
         </Grid>

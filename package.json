@@ -17,9 +17,11 @@
     "axios": "^1.6.8",
     "devextreme": "23.2.4",
     "devextreme-react": "23.2.4",
+    "moment": "^2.30.1",
     "ramda": "^0.30.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

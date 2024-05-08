@@ -44,20 +44,24 @@ export const TitleMenu = ({ title, menuList, ...props }) => {
         <Stack direction='row' justifyContent='space-between' alignItems='center' color={theme?.palette?.common?.black} {...props}>
             <Box fontSize={18} fontWeight={600}>{title}</Box>
             <Box color='black'>
-                <MuiIconButton onClick={handleOpen} sx={{ bgcolor: theme?.palette?.primary?.hoverGray, borderRadius: 2 }}>
-                    <MoreVertOutlined sx={{ color: theme?.palette?.primary?.purple }} />
-                </MuiIconButton>
-                <Menu
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                >
-                    {menuList?.map((option, idx) => (
-                        <MenuItem key={`title-menu-list-${option}-${idx}`}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </Menu>
+                {menuList && (
+                    <>
+                        <MuiIconButton onClick={handleOpen} sx={{ bgcolor: theme?.palette?.primary?.hoverGray, borderRadius: 2 }}>
+                            <MoreVertOutlined sx={{ color: theme?.palette?.primary?.purple }} />
+                        </MuiIconButton>
+                        <Menu
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                        >
+                            {menuList?.map((option, idx) => (
+                                <MenuItem key={`title-menu-list-${option}-${idx}`}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </>
+                )}
             </Box>
         </Stack>
     );

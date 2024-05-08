@@ -10,7 +10,7 @@ const Layout = ({ navigation, body }) => {
                 <Grid item xs={.5} height='100vh'>
                     {navigation}
                 </Grid>
-                <Grid item xs={11.5} height='100vh' pl={4} bgcolor={theme?.palette?.primary?.main}>
+                <Grid item xs={11.5} height='100vh' pl={6} bgcolor={theme?.palette?.primary?.main}>
                     {body}
                 </Grid>
             </Grid>
