@@ -1,55 +1,45 @@
+import moment from "moment";
 import { always, cond, map, prop, startsWith } from "ramda";
 import { useMemo } from "react";
-import useWeather from "./use-weather";
-import moment from "moment";
+import useCurrentForecast from "./use-current-forecast";
+import useForecastWeather from "./use-forecast-weather";
+import useHistoryWeather from "./use-history-weather";
 import useStore from "./zustand";
 
 const useWeatherData = ({ tempType }) => {
     const [selected] = useStore(state => [state.selected]);
-    const weatherQuery = useMemo(() => {
-        const historyOpts = {
-            type: 'history.json',
-            dt: moment(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)).format('YYYY-MM-DD'),
-            end_dt: moment(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)).format('YYYY-MM-DD')
-        }
-        const currentOpts = {
-            type: 'forecast.json'
-        }
-        const forecastOpts = {
-            type: 'forecast.json',
-            days: 14, dt: moment(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)).format('YYYY-MM-DD')
-        }
-        const astronomyOpts = {
-            type: 'astronomy.json'
-        }
+    const { current } = useCurrentForecast();
+    const { history } = useHistoryWeather();
+    const { forecast } = useForecastWeather();
+
+    console.log('current', current)
+    console.log('history', history)
+    console.log('forecast', forecast)
+    console.log('selected', selected)
+    const data = useMemo(() => {
         const findOpts = cond([
-            [startsWith('h'), always(historyOpts)],
-            [startsWith('c'), always(currentOpts)],
-            [startsWith('a'), always(astronomyOpts)],
-            [startsWith('f'), always(forecastOpts)],
+            [startsWith('h'), always(history)],
+            [startsWith('c'), always(current?.hour)],
+            [startsWith('f'), always(forecast)],
         ]);
         return findOpts(selected);
-    }, [selected]);
-    console.log('weatherQuery', weatherQuery)
-    const { weather } = useWeather(weatherQuery);
-    console.log('weather1', weather)
-    const forecast = useMemo(() => {
-        if (weather?.forecast) {
-            console.log('weather?.forecast', weather?.forecast)
-            return weather?.forecast?.forecastday[0]?.hour
-        }
-        return []
-    }, [weather]);
-    console.log('forecast', forecast)
+    }, [current, forecast, history, selected]);
+    console.log('data', data)
     const hours = map((hour) => {
+        if (selected !== 'current.json') {
+            return { ...hour }
+        }
         return { ...hour, time: moment(prop('time', hour)).format('LT') };
-    })(forecast || []);
+    })(data || []);
     const temps = map((hour) => {
+        if (selected !== 'current.json') {
+            return { ...hour, avgtemp_f: prop(tempType === 'temp_f' ? 'avgtemp_f' : 'avgtemp_c', hour?.day) }
+        }
         return prop(tempType || 'temp_f', hour);
-    })(forecast || []);
+    })(data || []);
     const isDay = map((hour) => {
         return prop('is_day', hour);
-    })(forecast || []);
+    })(data || []);
 
     return { hours, temps, isDay, forecast }
 };

@@ -1,10 +1,10 @@
 import { WbTwilightOutlined } from '@mui/icons-material';
 import { Box, Stack, useTheme } from '@mui/material';
-import useWeather from '../../hooks/use-weather';
+import useAstronomyWeather from '../../hooks/use-astronomy-weather';
 
 const AstronomyWidget = () => {
     const theme = useTheme();
-    const { weather } = useWeather({ type: 'astronomy.json' });
+    const { astronomy } = useAstronomyWeather();
     return (
         <Box
             height='11em'
@@ -16,7 +16,7 @@ const AstronomyWidget = () => {
             <Stack color={theme?.palette?.common?.black} height='100%' w='100%' spacing={2}>
                 <Stack fontWeight={500}>
                     <Box fontSize='2em'>Sunset</Box>
-                    <Box color={theme?.palette?.primary?.smallGray} fontSize='.75em'>{weather?.astronomy?.astro?.sunset}</Box>
+                    <Box color={theme?.palette?.primary?.smallGray} fontSize='.75em'>{astronomy?.astro?.sunset}</Box>
                 </Stack>
                 <Box color={theme?.palette?.primary?.purple}>
                     <WbTwilightOutlined fontSize='large' />

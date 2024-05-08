@@ -1,6 +1,6 @@
 import { Box, Stack, useTheme } from '@mui/material';
 import { useCallback, useMemo } from 'react';
-import useWeather from '../../hooks/use-weather';
+import useCurrentWeather from '../../hooks/use-current-weather';
 import useStore from '../../hooks/zustand';
 
 const CurrentWidget = () => {
@@ -15,7 +15,7 @@ const CurrentWidget = () => {
     const bgColor = useMemo(() => isSelected ? theme?.palette?.primary.purple : 'white', [isSelected, theme?.palette?.primary.purple]);
     const color = useMemo(() => isSelected ? 'white' : theme?.palette?.common?.black, [isSelected, theme?.palette?.common?.black]);
     const ccColor = useMemo(() => isSelected ? theme?.palette?.primary?.smallWhite : theme?.palette?.primary?.smallGray, [isSelected, theme?.palette?.primary?.smallGray, theme?.palette?.primary?.smallWhite]);
-    const { weather } = useWeather({ type: 'current.json' });
+    const { current } = useCurrentWeather();
     return (
         <Box
             onClick={handleSelected}
@@ -28,11 +28,11 @@ const CurrentWidget = () => {
         >
             <Stack color={color} height='100%' w='100%' spacing={isSelected ? 4 : 2}>
                 <Stack fontWeight={500}>
-                    <Box fontSize={isSelected ? '3em' : '2em'}>{weather?.current?.condition?.text || 'Cloudy'}</Box>
+                    <Box fontSize={isSelected ? '2.5em' : '2em'}>{current?.condition?.text || 'Cloudy'}</Box>
                     <Box color={ccColor} fontSize={isSelected ? '.9em' : '.75em'}>CURRENT CONDITIONS</Box>
                 </Stack>
                 <Box>
-                    <Box fontSize={isSelected ? '3em' : '2em'}>{Math.trunc(weather?.current?.temp_f) || 0}</Box>
+                    <Box fontSize={isSelected ? '3em' : '2em'}>{Math.trunc(current?.temp_f) || 0}</Box>
                 </Box>
             </Stack>
         </Box>
