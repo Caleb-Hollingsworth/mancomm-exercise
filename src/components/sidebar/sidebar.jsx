@@ -4,9 +4,11 @@ import useAstronomyWeather from '../../hooks/use-astronomy-weather';
 import { prop } from 'ramda';
 import { useMemo } from 'react';
 import { Brightness3, DarkMode, NightsStay, WbSunny, WbTwilight } from '@mui/icons-material';
+import useBreakpoint from '../../hooks/use-breakpoint';
 
 const Sidebar = () => {
     const { astronomy } = useAstronomyWeather();
+    const { size } = useBreakpoint();
     const theme = useTheme();
     const astroData = useMemo(() => {
         if (astronomy?.astro) {
@@ -28,7 +30,7 @@ const Sidebar = () => {
             <Stack spacing={4}>
                 {astroData?.map((astro, idx) => (
                     <RoundedBox key={`astro-section-${astro?.title}-${idx}`}>
-                        <Stack direction='row' alignItems='center' justifyContent='space-between'>
+                        <Stack direction={size === 'large' ? 'row' : 'column'} spacing={size === 'large' ? 0 : 2} alignItems='center' justifyContent='space-between'>
                             <Stack direction='row' alignItems='center' spacing={2}>
                                 <Box color={theme?.palette?.primary?.purple}>
                                     {astro?.icon}
