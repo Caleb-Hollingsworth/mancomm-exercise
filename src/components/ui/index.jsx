@@ -1,8 +1,10 @@
 import { MoreVertOutlined } from "@mui/icons-material";
 import { Box, Menu, MenuItem, IconButton as MuiIconButton, Stack, Tooltip, useTheme } from "@mui/material";
 import { useCallback, useState } from "react";
+import useBreakpoint from "../../hooks/use-breakpoint";
 
 export const IconButton = ({ children, noHover, noCursor, selected, tip, ...props }) => {
+    const { mobile } = useBreakpoint();
     const theme = useTheme();
     return (
         <Tooltip title={tip} placement="right">
@@ -19,8 +21,8 @@ export const IconButton = ({ children, noHover, noCursor, selected, tip, ...prop
                 variant='text'
                 height='3.75em'
                 borderLeft='2px solid'
-                borderColor={selected ? theme?.palette?.primary?.purple : 'transparent'}
-                bgcolor={selected ? theme?.palette?.primary?.hoverGray : 'transparent'}
+                borderColor={!mobile && selected ? theme?.palette?.primary?.purple : 'transparent'}
+                bgcolor={!mobile && selected ? theme?.palette?.primary?.hoverGray : 'transparent'}
                 {...props}
             >
                 {children}
@@ -55,8 +57,14 @@ export const TitleMenu = ({ title, menuList, ...props }) => {
                             onClose={handleClose}
                         >
                             {menuList?.map((option, idx) => (
-                                <MenuItem key={`title-menu-list-${option}-${idx}`}>
-                                    {option}
+                                <MenuItem
+                                    key={`title-menu-list-${option?.value}-${idx}`}
+                                    onClick={() => {
+                                        option?.onClick();
+                                        handleClose();
+                                    }}
+                                >
+                                    {option?.text}
                                 </MenuItem>
                             ))}
                         </Menu>

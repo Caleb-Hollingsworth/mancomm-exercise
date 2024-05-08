@@ -1,22 +1,29 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { Chart as DevChart } from "devextreme-react";
 import { CommonSeriesSettings, Crosshair, Font, Label, Series } from "devextreme-react/cjs/chart";
 import { always, cond, flatten, startsWith } from "ramda";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import useWeatherData from "../../hooks/use-weather-data";
 import useStore from "../../hooks/zustand";
 import { TitleMenu } from "../ui";
+import useBreakpoint from "../../hooks/use-breakpoint";
 
 
 const Chart = () => {
-    const [selected] = useStore(state => [state.selected]);
-    const [tempType, setTempType] = useState('temp_f');
-    const { hours, temps } = useWeatherData({ tempType });
-    // new chart data for when changing 'selected', then list info on right column, then mobile, test, deploy
+    const theme = useTheme();
+    const { mobile } = useBreakpoint();
+    const [selected, tempType, setTempType] = useStore(state => [state.selected, state.tempType, state.setTempType]);
+    const { hours, temps } = useWeatherData();
+    const options = useMemo(() => {
+        return [
+            { value: 'temp_f', text: 'Fahrenheit', onClick: () => setTempType('temp_f') },
+            { value: 'temp_c', text: 'Celsius', onClick: () => setTempType('temp_c') }
+        ]
+    }, [setTempType]);
     const weatherSources = useMemo(() => {
         if (selected !== 'current.json') {
             return [
-                { value: tempType === 'temp_f' ? 'avgtemp_f' : 'avgtemp_c', name: 'Temperature' }
+                { value: 'temp', name: 'Temperature' }
             ]
         }
         return [
@@ -41,11 +48,11 @@ const Chart = () => {
     }, [selected]);
 
     return (
-        <Box>
+        <Box p={mobile ? 4 : 0} width={mobile ? 'calc(100vw - 1em)' : '100%'}>
             <Box pb={4}>
-                <TitleMenu title={weatherTitle} />
+                <TitleMenu title={weatherTitle} menuList={options} />
             </Box>
-            <DevChart dataSource={dataSource} palette='Ocean'>
+            <DevChart dataSource={dataSource} palette='Ocean' legend={{ visible: false }}>
                 <CommonSeriesSettings argumentField={selected === 'current.json' ? 'time' : 'date'} />
                 {weatherSources?.map((source) => (
                     <Series
@@ -54,22 +61,24 @@ const Chart = () => {
                         name={source?.name}
                     />
                 ))}
-                <Crosshair
-                    enabled={true}
-                    color="#949494"
-                    width={3}
-                    dashStyle="dot"
-                >
-                    <Label
-                        visible={true}
-                        backgroundColor="#949494"
+                {!mobile && (
+                    <Crosshair
+                        enabled={true}
+                        color="#949494"
+                        width={3}
+                        dashStyle="dot"
                     >
-                        <Font
-                            color="#fff"
-                            size={12}
-                        />
-                    </Label>
-                </Crosshair>
+                        <Label
+                            visible={true}
+                            backgroundColor={theme?.palette?.primary?.purple}
+                        >
+                            <Font
+                                color="#fff"
+                                size={12}
+                            />
+                        </Label>
+                    </Crosshair>
+                )}
             </DevChart>
         </Box>
     );

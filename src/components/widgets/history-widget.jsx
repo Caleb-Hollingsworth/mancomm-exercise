@@ -1,9 +1,12 @@
+import { EventRepeatOutlined } from '@mui/icons-material';
 import { Box, Stack, useTheme } from '@mui/material';
 import { useCallback, useMemo } from 'react';
 import useStore from '../../hooks/zustand';
+import useBreakpoint from '../../hooks/use-breakpoint';
 
 const HistoryWidget = () => {
     const theme = useTheme();
+    const { size } = useBreakpoint();
     const [selected, setSelected] = useStore(state => [state.selected, state.setSelected]);
     const handleSelected = useCallback(() => {
         return setSelected('history.json');
@@ -23,14 +26,20 @@ const HistoryWidget = () => {
             bgcolor={bgColor}
             borderRadius='0 0 1.5em 1.5em'
             p={4}
+            pt={2}
             sx={{ ":hover": { cursor: 'pointer', backgroundColor: isSelected ? theme?.palette?.primary?.hoverPurple : theme?.palette?.primary?.hoverGray } }}
         >
-            <Box color={color} height='100%' w='100%' spacing={4}>
+            <Stack color={color} height='100%' w='100%' justifyContent='space-between'>
                 <Stack fontWeight={500}>
-                    <Box fontSize={isSelected ? '3em' : '2em'}>Last 7 Days</Box>
+                    <Box fontSize={isSelected ? '2em' : '1.5em'}>Last 7 Days</Box>
                     <Box color={ccColor} fontSize={isSelected ? '.9em' : '.75em'}>WEEK BEHIND</Box>
                 </Stack>
-            </Box>
+                {size === 'large' && (
+                    <Box>
+                        <EventRepeatOutlined fontSize={isSelected ? 'large' : 'medium'} />
+                    </Box>
+                )}
+            </Stack>
         </Box>
     );
 };

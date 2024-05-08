@@ -12,11 +12,12 @@ const AstronomyWidget = () => {
             bgcolor='white'
             borderRadius='0 0 1.5em 1.5em'
             p={4}
+            pt={2}
         >
             <Stack color={theme?.palette?.common?.black} height='100%' w='100%' spacing={2}>
                 <Stack fontWeight={500}>
-                    <Box fontSize='2em'>Sunset</Box>
-                    <Box color={theme?.palette?.primary?.smallGray} fontSize='.75em'>{astronomy?.astro?.sunset}</Box>
+                    <Box fontSize='1.5em'>Sunset</Box>
+                    <Box color={theme?.palette?.primary?.smallGray} fontSize='.8em'>{astronomy?.astro?.sunset}</Box>
                 </Stack>
                 <Box color={theme?.palette?.primary?.purple}>
                     <WbTwilightOutlined fontSize='large' />

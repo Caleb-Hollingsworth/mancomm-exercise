@@ -6,8 +6,8 @@ import useForecastWeather from "./use-forecast-weather";
 import useHistoryWeather from "./use-history-weather";
 import useStore from "./zustand";
 
-const useWeatherData = ({ tempType }) => {
-    const [selected] = useStore(state => [state.selected]);
+const useWeatherData = () => {
+    const [selected, tempType] = useStore(state => [state.selected, state.tempType]);
     const { current } = useCurrentForecast();
     const { history } = useHistoryWeather();
     const { forecast } = useForecastWeather();
@@ -24,7 +24,7 @@ const useWeatherData = ({ tempType }) => {
         ]);
         return findOpts(selected);
     }, [current, forecast, history, selected]);
-    console.log('data', data)
+
     const hours = map((hour) => {
         if (selected !== 'current.json') {
             return { ...hour }
@@ -33,9 +33,9 @@ const useWeatherData = ({ tempType }) => {
     })(data || []);
     const temps = map((hour) => {
         if (selected !== 'current.json') {
-            return { ...hour, avgtemp_f: prop(tempType === 'temp_f' ? 'avgtemp_f' : 'avgtemp_c', hour?.day) }
+            return { ...hour, temp: prop(tempType === 'temp_f' ? 'avgtemp_f' : 'avgtemp_c', hour?.day) }
         }
-        return prop(tempType || 'temp_f', hour);
+        return prop(tempType, hour);
     })(data || []);
     const isDay = map((hour) => {
         return prop('is_day', hour);
