@@ -5,8 +5,8 @@ import useBreakpoint from '../../hooks/use-breakpoint';
 
 const Layout = ({ navigation, body }) => {
     const theme = useTheme();
-    const { size, mobile } = useBreakpoint();
-    console.log('size', size)
+    const { mobile } = useBreakpoint();
+
     return (
         <Box height='100vh' width='100vw'>
             <Grid container columns={12} m={0}>
@@ -22,7 +22,7 @@ const Layout = ({ navigation, body }) => {
                 )}
                 {mobile && (
                     <Grid item height='100vh' xs={12} bgcolor={theme?.palette?.primary?.main}>
-                        <Stack alignItems='center'>
+                        <Stack alignItems='center' height='100%'>
                             {navigation}
                             {body}
                         </Stack>

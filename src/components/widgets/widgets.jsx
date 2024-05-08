@@ -7,8 +7,8 @@ import HistoryWidget from "./history-widget";
 
 const Widgets = () => {
     return (
-        <Box>
-            <Stack direction='row' spacing={6}>
+        <Box width='100%'>
+            <Stack direction='row' justifyContent='space-between' width='100%' spacing={4}>
                 <CurrentWidget />
                 <ForecastWidget />
                 <HistoryWidget />

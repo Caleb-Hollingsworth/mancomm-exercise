@@ -7,7 +7,7 @@ import useBreakpoint from '../../hooks/use-breakpoint';
 const CurrentWidget = () => {
     const theme = useTheme();
     const { size } = useBreakpoint();
-    const [selected, setSelected] = useStore(state => [state.selected, state.setSelected]);
+    const [selected, setSelected, tempType] = useStore(state => [state.selected, state.setSelected, state.tempType]);
     const handleSelected = useCallback(() => {
         return setSelected('current.json');
     }, [setSelected]);
@@ -36,7 +36,7 @@ const CurrentWidget = () => {
                 </Stack>
                 {size === 'large' && (
                     <Box>
-                        <Box fontSize={isSelected ? '3em' : '2em'}>{Math.trunc(current?.temp_f) || 0}</Box>
+                        <Box fontSize={isSelected ? '3em' : '2em'}>{Math.trunc(current?.[tempType]) || 0}</Box>
                     </Box>
                 )}
             </Stack>

@@ -1,9 +1,8 @@
+import { TodayOutlined } from '@mui/icons-material';
 import { Box, Stack, useTheme } from '@mui/material';
 import { useCallback, useMemo } from 'react';
-import useForecastWeather from '../../hooks/use-forecast-weather';
-import useStore from '../../hooks/zustand';
-import { TodayOutlined } from '@mui/icons-material';
 import useBreakpoint from '../../hooks/use-breakpoint';
+import useStore from '../../hooks/zustand';
 
 const ForecastWidget = () => {
     const theme = useTheme();
@@ -18,8 +17,7 @@ const ForecastWidget = () => {
     const bgColor = useMemo(() => isSelected ? theme?.palette?.primary.purple : 'white', [isSelected, theme?.palette?.primary.purple]);
     const color = useMemo(() => isSelected ? 'white' : theme?.palette?.common?.black, [isSelected, theme?.palette?.common?.black]);
     const ccColor = useMemo(() => isSelected ? theme?.palette?.primary?.smallWhite : theme?.palette?.primary?.smallGray, [isSelected, theme?.palette?.primary?.smallGray, theme?.palette?.primary?.smallWhite]);
-    const { forecast } = useForecastWeather();
-    console.log('forecast', forecast)
+
     return (
         <Box
             onClick={handleSelected}

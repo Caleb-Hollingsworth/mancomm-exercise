@@ -6,9 +6,6 @@ const useBreakpoint = () => {
     const largeScreen = useMediaQuery(theme?.breakpoints?.up('lg'));
     const mediumScreen = useMediaQuery(theme?.breakpoints?.only('md'));
     const mobileScreen = useMediaQuery(theme?.breakpoints?.down('md'));
-    console.log('largeScreen', largeScreen)
-    console.log('mediumScreen', mediumScreen)
-    console.log('mobileScreen', mobileScreen)
 
     const size = useMemo(() => {
         return largeScreen ? 'large' : mediumScreen ? 'medium' : mobileScreen ? 'mobile' : 'unknown';

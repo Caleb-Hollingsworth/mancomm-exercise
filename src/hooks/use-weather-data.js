@@ -12,10 +12,6 @@ const useWeatherData = () => {
     const { history } = useHistoryWeather();
     const { forecast } = useForecastWeather();
 
-    console.log('current', current)
-    console.log('history', history)
-    console.log('forecast', forecast)
-    console.log('selected', selected)
     const data = useMemo(() => {
         const findOpts = cond([
             [startsWith('h'), always(history)],

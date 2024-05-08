@@ -74,3 +74,18 @@ export const TitleMenu = ({ title, menuList, ...props }) => {
         </Stack>
     );
 };
+
+export const RoundedBox = ({ children, ...props }) => {
+    const theme = useTheme();
+    return (
+        <Box
+            bgcolor={theme?.palette?.primary?.main}
+            borderRadius='1.25em'
+            p={4}
+            spacing={2}
+            {...props}
+        >
+            {children}
+        </Box>
+    );
+};
